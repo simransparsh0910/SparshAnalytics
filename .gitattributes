@@ -1,2 +1,4 @@
 virtual_analytics/*.pt filter=lfs diff=lfs merge=lfs -text
 virtual_analytics/*.pth filter=lfs diff=lfs merge=lfs -text
+face_recognition/*.onnx filter=lfs diff=lfs merge=lfs -text
+face_recognition/*.pth filter=lfs diff=lfs merge=lfs -text
