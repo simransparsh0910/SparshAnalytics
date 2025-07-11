@@ -1,0 +1,171 @@
+/* Main grid container */
+.video-grid {
+  display: grid;
+  gap: 0px; /* No gap between grid tiles */
+  background-color: #e0e0e0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Define grid layout for different grid sizes */
+.grid-1 {
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* Video Tile with consistent aspect ratio */
+.video-tile {
+  position: relative;
+  background-color: #333; /* Dark gray background when there's no stream */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.video-tile::before {
+  content: '';
+  display: block;
+  padding-top: 56.25%; /* Maintain 16:9 aspect ratio for the video tiles */
+}
+
+.video-tile video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Ensure the video fits inside the tile without cropping */
+  background-color: black;
+}
+
+/* Loader styling */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+/* No Stream icon and styling */
+.no-stream {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.stream-icon {
+  position: absolute;
+  width: 50px; /* Adjust size according to your grid */
+  height: 50px;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 10px;
+  width: 550px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 18px;
+  background: black;
+  border: none;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.stream-close-btn {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: red !important;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  font-weight: bold;
+  padding: 6px 12px !important;
+}
+
+.video-tile .stream-close-btn {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Prevent interaction when hidden */
+}
+
+.video-tile:hover .stream-close-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-tile:hover{
+  border: 1px solid red;
+  /* transform: scale(1.1);
+  transition: transform 0. */
+}
+
+
+

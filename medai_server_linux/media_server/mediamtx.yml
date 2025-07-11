@@ -1,0 +1,197 @@
+logLevel: info
+logDestinations:
+  - stdout
+logFile: mediamtx.log
+readTimeout: 10s
+writeTimeout: 10s
+writeQueueSize: 2048
+udpMaxPayloadSize: 1472
+runOnConnect: null
+runOnConnectRestart: false
+runOnDisconnect: null
+authMethod: internal
+authInternalUsers:
+  - user: any
+    pass: null
+    ips: []
+    permissions:
+      - action: publish
+        path: null
+      - action: read
+        path: null
+      - action: playback
+        path: null
+  - user: any
+    pass: null
+    ips:
+      - 127.0.0.1
+      - '::1'
+    permissions:
+      - action: api
+      - action: metrics
+      - action: pprof
+authHTTPAddress: null
+authHTTPExclude:
+  - action: api
+  - action: metrics
+  - action: pprof
+authJWTJWKS: null
+api: true
+apiAddress: localhost:9997
+apiEncryption: false
+apiServerKey: server.key
+apiServerCert: server.crt
+apiAllowOrigin: '*'
+apiTrustedProxies: []
+metrics: false
+metricsAddress: ':9998'
+metricsEncryption: false
+metricsServerKey: server.key
+metricsServerCert: server.crt
+metricsAllowOrigin: '*'
+metricsTrustedProxies: []
+pprof: false
+pprofAddress: ':9999'
+pprofEncryption: false
+pprofServerKey: server.key
+pprofServerCert: server.crt
+pprofAllowOrigin: '*'
+pprofTrustedProxies: []
+playback: true
+playbackAddress: ':9996'
+playbackEncryption: true
+playbackServerKey: self.key
+playbackServerCert: self.crt
+playbackAllowOrigin: '*'
+playbackTrustedProxies: []
+rtsp: true
+protocols:
+  - udp
+  - multicast
+  - tcp
+encryption: 'false'
+rtspAddress: ':8554'
+rtspsAddress: ':8322'
+rtpAddress: ':8000'
+rtcpAddress: ':8001'
+multicastIPRange: 224.1.0.0/16
+multicastRTPPort: 8002
+multicastRTCPPort: 8003
+serverKey: server.key
+serverCert: server.crt
+rtspAuthMethods:
+  - basic
+rtmp: true
+rtmpAddress: ':1935'
+rtmpEncryption: 'false'
+rtmpsAddress: ':1936'
+rtmpServerKey: server.key
+rtmpServerCert: server.crt
+hls: true
+hlsAddress: ':8888'
+hlsEncryption: false
+hlsServerKey: server.key
+hlsServerCert: server.crt
+hlsAllowOrigin: '*'
+hlsTrustedProxies: []
+hlsAlwaysRemux: false
+hlsVariant: lowLatency
+hlsSegmentCount: 7
+hlsSegmentDuration: 1s
+hlsPartDuration: 200ms
+hlsSegmentMaxSize: 50M
+hlsDirectory: hls
+hlsMuxerCloseAfter: 60s
+webrtc: true
+webrtcAddress: ':8889'
+webrtcEncryption: true
+webrtcServerKey: self.key
+webrtcServerCert: self.crt
+webrtcAllowOrigin: '*'
+webrtcTrustedProxies: []
+webrtcLocalUDPAddress: ':8189'
+webrtcLocalTCPAddress: ''
+webrtcIPsFromInterfaces: true
+webrtcIPsFromInterfacesList: []
+webrtcAdditionalHosts:
+  - 192.168.1.191
+webrtcICEServers2: []
+srt: true
+srtAddress: ':8890'
+pathDefaults:
+  source: publisher
+  sourceFingerprint: null
+  sourceOnDemand: false
+  sourceOnDemandStartTimeout: 10s
+  sourceOnDemandCloseAfter: 10s
+  maxReaders: 0
+  srtReadPassphrase: null
+  fallback: null
+  record: true
+  recordPath: ./recordings/%path/%Y-%m-%d/%H-%M-%S-%f
+  recordFormat: fmp4
+  recordPartDuration: 1s
+  recordSegmentDuration: 1h
+  recordDeleteAfter: 24h
+  overridePublisher: true
+  srtPublishPassphrase: null
+  rtspTransport: tcp
+  rtspAnyPort: false
+  rtspRangeType: null
+  rtspRangeStart: null
+  sourceRedirect: null
+  rpiCameraCamID: 0
+  rpiCameraWidth: 1920
+  rpiCameraHeight: 1080
+  rpiCameraHFlip: false
+  rpiCameraVFlip: false
+  rpiCameraBrightness: 0
+  rpiCameraContrast: 1
+  rpiCameraSaturation: 1
+  rpiCameraSharpness: 1
+  rpiCameraExposure: normal
+  rpiCameraAWB: auto
+  rpiCameraAWBGains:
+    - 0
+    - 0
+  rpiCameraDenoise: 'off'
+  rpiCameraShutter: 0
+  rpiCameraMetering: centre
+  rpiCameraGain: 0
+  rpiCameraEV: 0
+  rpiCameraROI: null
+  rpiCameraHDR: false
+  rpiCameraTuningFile: null
+  rpiCameraMode: null
+  rpiCameraFPS: 30
+  rpiCameraIDRPeriod: 60
+  rpiCameraBitrate: 1000000
+  rpiCameraProfile: main
+  rpiCameraLevel: '4.1'
+  rpiCameraAfMode: continuous
+  rpiCameraAfRange: normal
+  rpiCameraAfSpeed: normal
+  rpiCameraLensPosition: 0
+  rpiCameraAfWindow: null
+  rpiCameraTextOverlayEnable: false
+  rpiCameraTextOverlay: '%Y-%m-%d %H:%M:%S - MediaMTX'
+  runOnInit: null
+  runOnInitRestart: false
+  runOnDemand: null
+  runOnDemandRestart: false
+  runOnDemandStartTimeout: 10s
+  runOnDemandCloseAfter: 10s
+  runOnUnDemand: null
+  runOnReady: null
+  runOnReadyRestart: false
+  runOnNotReady: null
+  runOnRead: null
+  runOnReadRestart: false
+  runOnUnread: null
+  runOnRecordSegmentCreate: null
+  runOnRecordSegmentComplete: null
+paths:
+  primary1:
+    source: rtsp://admin:admin123@192.168.29.203:554/avstream/channel=1/stream=0.sdp
+  secondary1:
+    source: rtsp://admin:admin123@192.168.29.203:554/avstream/channel=1/stream=1.sdp

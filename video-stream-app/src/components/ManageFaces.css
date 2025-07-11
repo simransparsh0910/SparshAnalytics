@@ -1,0 +1,338 @@
+.addFace-app-container, .addCameraFormContainer, .addUserFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  min-height: 94vh;
+}
+
+.addFace-app-container h2, .addCameraFormContainer h2, .addUserFormContainer h2{
+  color: #fff;
+}
+
+.e-rowcell{
+  white-space: normal !important;
+}
+
+form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 28%;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="file"] {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+#personName, .camera_field{
+  width: 98%;
+  padding: 8px 2px;
+  border-radius: 4px;
+  border: 1px solid darkgray;
+}
+
+#group , #analytictype, #status{
+  padding: 5px 10px;
+  border: 1px solid darkgrey;
+  border-radius: 8px;
+}
+  
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  background-color: darkgrey;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: black;
+  color:white;
+}
+
+.radioBox-container {
+  display: flex;
+  align-items: center; 
+  margin-bottom: 1rem; 
+}
+
+.radioBox-container input[type="radio"] {
+  margin-right: 0.5rem; 
+}
+  
+.facesTableContainer, .cameraTableContainer, .userTableContainer {
+  margin: 20px auto; 
+  max-width: 80%;
+  padding: 20px 0px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; 
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cameraTableContainer{
+  min-width: 100%;
+}
+
+table {
+  width: 100%; 
+  border-collapse: collapse;
+}
+ table thead th { 
+  background-color: #4CAF50; 
+  color: white; 
+  padding: 12px 15px; 
+  text-align: left; 
+  border-bottom: 2px solid #ddd;
+  font-size: 16px;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #ddd; 
+}
+
+table tbody td {
+  padding: 12px 15px; 
+  text-align: left; 
+  font-size: 14px;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1; 
+}
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: darkgrey; 
+  color: white; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: black; 
+}
+
+.e-grid .e-pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  flex-direction: column;
+  
+}
+
+.e-numericcontainer{
+  display: flex;
+}
+
+.e-grid .e-pager .e-numericcontainer .e-link,
+.e-grid .e-pager .e-icon {
+  display: flex;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+}
+
+.e-grid .e-pager .e-numericcontainer .e-link.e-currentitem {
+  background-color: #007bff;
+  color: white;
+}
+
+.e-grid .e-pager .e-icon {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.e-grid{
+  width: 61%;
+}
+
+.e-icon-next{
+  display: none;
+}
+
+.addFaceButton, .addCameraButton, .addUserButton{
+  margin-top: 15px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.filter-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-input {
+  padding: 5px;
+  border: none;
+  border-bottom: 2px solid #888;
+  outline: none;
+  width: 120px;
+  font-size: 14px;
+  color: #666;
+  transition: border-color 0.5s ease;
+  background-color: transparent;
+}
+
+.filter-input::placeholder {
+  color: #aaa;
+}
+
+.filter-input:focus {
+  border-bottom: 2px solid #ff3366;
+}
+
+.filter-button {
+  padding: 8px 20px;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: darkgrey;
+}
+
+.filter-button:hover {
+  background-color: black;
+}
+
+.react-datepicker {
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.react-datepicker__header {
+  color: white;
+  border-bottom: none;
+}
+
+.react-datepicker__current-month {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.react-datepicker__day {
+  color: #333;
+  font-weight: normal;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  color: white;
+  border-radius: 50%;
+}
+
+.react-datepicker__day:hover {
+  color: rgb(92, 86, 86);
+  border-radius: 50%;
+}
+
+.react-datepicker__day--today {
+  font-weight: bold;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.react-datepicker__year-select{
+border: 1px solid darkgray;
+padding: 2px 5px;
+border-radius: 5px;
+background-color: transparent;
+outline: none;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  padding: 1.5rem 2rem;
+  font-size: 1.25rem;
+  background-color: #ffffff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+

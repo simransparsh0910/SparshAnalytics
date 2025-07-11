@@ -1,0 +1,441 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { GridComponent, ColumnsDirective, ColumnDirective, Page, Sort, Inject} from '@syncfusion/ej2-react-grids';
+import imageCompression from 'browser-image-compression';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './ManageFaces.css';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import Menu from './Menu';
+import { ValidateAuth } from '../ValidateAuth';
+import { useNavigate } from 'react-router-dom';
+import 'font-awesome/css/font-awesome.min.css'; 
+
+const ManageFaces = () => {
+  const [facesData, setFacesData] = useState([]);
+  const [personName, setPersonName] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
+  const [remarks, setRemarks] = useState('');
+  const [status, setStatus] = useState('whitelist');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+  const [showForm, setShowForm] = useState(false);
+  const [groups, setGroups] = useState(["Group1", "Group2", "Group3", "Group4"]);
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
+  const [findPersonName, setFindPersonName] = useState("");
+  const gridRef = useRef(null);
+  const defaultImage = "/assets/defaultImage.png";
+
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkAuth = async () => {
+        const authData = await ValidateAuth();
+        if (!authData) {
+            navigate('/login');
+        }
+    };
+
+    checkAuth();
+  }, []);
+
+  // function getCsrfToken() {
+  //   const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+  //   return match ? match[1] : null;
+  // }
+  // const csrfToken = getCsrfToken();
+
+  const exportAllGridDataToPDF = async (gridRef) => {
+    if (!gridRef.current) return;
+
+    const data = gridRef.current.dataSource || [];
+    const doc = new jsPDF();
+
+    const columns = [
+        { header: "Person Id", dataKey: "id" },
+        { header: "Person Name", dataKey: "name" },
+        { header: "Type", dataKey: "type" },
+        { header: "Remark", dataKey: "remark" },
+        { header: "Date", dataKey: "date" },
+        { header: "Group", dataKey: "group_name" },
+        { header: "Image", dataKey: "image" }
+    ];
+
+    // Prepare rows
+    const rows = data.map(row => ({
+        id: row.id,
+        name: row.name,
+        type: row.type,
+        remark: row.remark,
+        date: row.date,
+        group_name: row.group_name || 'N/A',
+        image: " "
+    }));
+    doc.autoTable({
+        columns,
+        body: rows,
+        didDrawCell: (cellData) => {
+          if (cellData.column.dataKey === "image" && cellData.cell.raw && cellData.cell.section === 'body') {
+                const rowIndex = cellData.row.index; // row.index gives the index of the current row
+                const imgData = data[rowIndex].image;
+
+                if (imgData) {
+                  cellData.cell.text = [];
+                  cellData.cell.raw = "";
+                  cellData.cell.styles.fontSize = 0;
+
+                    // Calculate dimensions for the image to fit within the cell
+                    const cellWidth = cellData.cell.width - 2;
+                    const cellHeight = cellData.cell.height - 2;
+
+                    // Draw the image within the cell bounds
+                    doc.addImage(imgData, "JPEG", cellData.cell.x, cellData.cell.y, cellWidth, cellHeight);
+                }
+            }
+        },
+        startY: 10,
+    });
+
+    doc.save("ManageFacesPDF.pdf");
+  };
+
+  useEffect(() => {
+    const fetchFacesData = async () => {
+      try {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/getPersonsData`,{
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromDate, toDate, findPersonName }),
+        });
+        if (response.ok) {
+          await response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    };
+    fetchFacesData();
+
+    try {
+            const socket = new WebSocket(`ws://${process.env.REACT_APP_WEBSOCKET_URL}`);
+            socket.onopen = () => {
+              console.log('WebSocket connection opened');
+            };
+        
+            socket.onmessage = (event) => {
+              const outerResult = JSON.parse(event.data);
+              const innerResult = JSON.parse(outerResult.data)
+              if (outerResult.type === 'personData') {
+                setFacesData(innerResult);
+              }
+            };
+        
+            socket.onclose = () => {
+              console.log('WebSocket connection closed');
+            };
+          } catch (error) {
+            console.log("Error in Web Socket:", error)
+          }
+  }, []);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files; // Get the first (and only) file selected
+  
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
+  
+    const options = {
+      maxSizeMB: 0.2, // Compress to a smaller size
+      maxWidthOrHeight: 600,
+      quality: 0.2, // Lower quality for better compression
+      useWebWorker: true,
+    };
+  
+    try {
+      const compressedFile = await imageCompression(file, options);
+      if (compressedFile.size > 10 * 1024 * 1024) { // 10MB limit
+        console.error('File size is too large');
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+        setImageBase64(base64String); // Store the base64 string for the single image
+      };
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error('Error compressing image:', error);
+    }
+  };
+  
+  
+  const handleFind = async () => {
+    if ((fromDate && toDate) || (!fromDate && !toDate && findPersonName)) {
+      try {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/getPersonsData`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromDate, toDate, findPersonName }),
+        });
+
+        if (response.ok) {
+          await response.json();
+        } else {
+          throw new Error('Failed to fetch data. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      alert('Please Enter Information Correctly');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = {
+      PersonName: personName,
+      Image: imageBase64,
+      Remark: remarks,
+      Type: status,
+      GroupName: selectedGroup,
+    };
+    try {
+      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/uploadFace`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+      if (response.ok) {
+        setPersonName('');
+        setImageBase64('');
+        setRemarks('');
+        setStatus('whitelist');
+        setSelectedGroup('');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const deleteRow = async (id,name) => {
+    try {
+      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({id,name}),
+        credentials: 'include',
+      });
+      setFacesData((prevData) => prevData.filter((row) => row.id !== id));
+    } catch (error) {
+      console.error('Error deleting row:', error);
+    }
+  };
+
+  return (
+    <div>
+      <header className="header-menu">
+        <div>
+          <Menu />
+        </div>
+      </header>
+      {!showForm ? (
+        <div className='facesTableContainer'>
+          <h2>Manage Faces Report</h2>
+          <div className="filters">
+            <div className="filter-item">
+              <label className="filter-label">From:</label>
+              <DatePicker
+                selected={fromDate}
+                onChange={(date) => setFromDate(date)}
+                className="filter-input"
+                placeholderText="Select From Date"
+                showYearDropdown
+                dropdownMode="select" 
+              />
+            </div>
+
+            <div className="filter-item">
+              <label className="filter-label">To:</label>
+              <DatePicker
+                selected={toDate}
+                onChange={(date) => setToDate(date)}
+                className="filter-input"
+                placeholderText="Select To Date"
+                showYearDropdown
+                dropdownMode="select" 
+              />
+            </div>
+
+            <div className="filter-item">
+              <label className="filter-label">Name:</label>
+              <input 
+                type="text" 
+                value={findPersonName} 
+                onChange={(e) => setFindPersonName(e.target.value)} 
+                placeholder="Enter Name"
+                className="filter-input"
+              />
+            </div>
+
+            <button className="filter-button" onClick={() => handleFind()}>Find</button>
+          </div>
+
+          <GridComponent 
+            ref={gridRef} 
+            dataSource={facesData} 
+            allowPaging={true} 
+            allowSorting={true} 
+            pageSettings = {{pageSize:itemsPerPage, currentPage}}
+          >
+            <ColumnsDirective>
+              <ColumnDirective field='id' headerText='Person Id' width='120' textAlign="Center" />
+              <ColumnDirective field='name' headerText='Person Name' width='150' textAlign="Center" />
+              <ColumnDirective field='type' headerText='Type' width='100' textAlign="Center" />
+              <ColumnDirective field='remark' headerText='Remark' width='150' textAlign="Center" />
+              <ColumnDirective 
+                field='group'
+                headerText='Group' 
+                width='120' 
+                textAlign="Center" 
+                template={(rowData) => rowData.group_name ? rowData.group_name : 'N/A'}
+              />
+              <ColumnDirective
+                width='100'
+                template={(rowData) => (
+                  <img src= {rowData.image? `data:image/jpeg;base64,${rowData.image}`:defaultImage} alt='Uploaded Person Pic' width={50} />
+                )}
+                textAlign="Center"
+              />
+              <ColumnDirective 
+                headerText='Actions' 
+                width='120' 
+                height='50'
+                textAlign="Center" 
+                template={(rowData) => (
+                  <button 
+                    onClick={() => deleteRow(rowData.id,rowData.name)} 
+                    style={{ 
+                      background: 'none', 
+                      border: 'none', 
+                      cursor: 'pointer', 
+                      color: 'red', 
+                      fontSize: '18px' 
+                    }}
+                    title="Delete"
+                  >
+                    <i className="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                )}
+              />
+            </ColumnsDirective>
+            <Inject services={[Page,Sort]} />
+          </GridComponent>
+
+          <div className='button-container'>
+          {facesData.length? 
+            (<button type='button' className='exportPdfButton' onClick={() => exportAllGridDataToPDF(gridRef)}>Export to PDF</button>)
+            :
+            (<></>) 
+          }
+            <button  type = "button" className = "addFaceButton" onClick={() => setShowForm(true)}>Add Face</button>
+          </div>
+        </div>
+      ) : 
+      (
+        <div className='addFace-app-container'>
+          <h2>Add Face Form</h2>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="personName">Person Name:</label>
+              <input
+              type="text"
+              id="personName"
+              value={personName}
+              onChange={(e) => setPersonName(e.target.value)}
+              required
+            />
+            </div>
+
+            <div>
+              <label htmlFor="image">Upload Image:</label>
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                onChange={handleFileChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="remarks">Remarks:</label>
+              <textarea
+                id="remarks"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+              ></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="group">Group:</label>
+              <select 
+                id="group" 
+                value={selectedGroup} 
+                onChange={(e) => setSelectedGroup(e.target.value)} 
+                required
+              >
+                <option value="">Select a group</option>
+                {groups.map((group, index) => (
+                  <option key={index} value={group}>{group}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label>Type:</label>
+              <div className='radioBox-container'>
+                <input
+                  type="radio"
+                  id="whitelist"
+                  name="status"
+                  value="whitelist"
+                  checked={status === 'whitelist'}
+                  onChange={() => setStatus('whitelist')}
+                />
+                <label htmlFor="whitelist">Whitelist</label>
+              </div>
+              <div className='radioBox-container'>
+                <input
+                  type="radio"
+                  id="blacklist"
+                  name="status"
+                  value="blacklist"
+                  checked={status === 'blacklist'}
+                  onChange={() => setStatus('blacklist')}
+                />
+                <label htmlFor="blacklist">Blacklist</label>
+              </div>
+            </div>
+            <button type="submit">Submit</button>
+            <button type="button" onClick={() => setShowForm(false)}>Show Table</button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ManageFaces;

@@ -1,0 +1,79 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import ManageFaces from './components/ManageFaces';
+import DetectFacesReport from './components/DetectFacesReport';
+import Dashboard from './components/Dashboard';
+import Playback from './components/Playback'
+import LoginPage from './components/Login';
+import AddUser from './components/AddUser';
+import Logout from './components/Logout';
+import ManageCameras from './components/ManageCameras';
+
+const App = () => {
+  // const [streams, setStreams] = useState([]); // Store the streams for the grid cells
+  // const [gridSize, setGridSize] = useState(2); // Initial grid size
+
+  // // Handle device selection from the EventList
+  // const handleDeviceSelected = (streamUrl, index) => {
+  //   setStreams((prevStreams) => {
+  //     const updatedStreams = [...prevStreams];
+  //     updatedStreams[index] = streamUrl; // Update stream for the selected grid tile
+  //     return updatedStreams;
+  //   });
+  // };
+
+  // // Handle closing a stream for a specific tile
+  // const handleStreamClose = (index) => {
+  //   setStreams((prevStreams) => {
+  //     const updatedStreams = [...prevStreams];
+  //     updatedStreams[index] = null; // Set the stream to null (no stream)
+  //     return updatedStreams;
+  //   });
+  // };
+
+  // // Handle grid size change
+  // const handleGridChange = (event) => {
+  //   const newGridSize = parseInt(event.target.value);
+
+  //   setStreams((prevStreams) => {
+  //     const newStreams = [...prevStreams];
+
+  //     // Ensure the streams array has enough elements for the new grid size
+  //     const totalTiles = newGridSize * newGridSize;
+  //     if (newStreams.length < totalTiles) {
+  //       for (let i = newStreams.length; i < totalTiles; i++) {
+  //         newStreams.push(null); // Add null for new grid cells with no streams
+  //       }
+  //     }
+  //     return newStreams;
+  //   });
+
+  //   setGridSize(newGridSize);
+  // };
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        
+        <Route path="/login" element={<LoginPage/>} />
+        
+        <Route path="/dashboard/*" element={<Dashboard />} />
+
+        <Route path="/manageFaces" element={<ManageFaces />} />
+        
+        <Route path="/detectFacesReport" element={<DetectFacesReport />} />
+
+        <Route path="/playback" element={<Playback />} />
+
+        <Route path='/addUser' element={<AddUser/>} />
+
+        <Route path="/logout" element={<Logout />} />
+      </Routes>
+    </Router>
+    
+  );
+};
+
+export default App;

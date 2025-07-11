@@ -1,0 +1,82 @@
+/* Main App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 94vh;
+}
+/* new */
+.header-menu {
+  color: white;
+  padding: 10px 35px;
+  text-align: center;
+  box-shadow: 0px 0px 15px 1px grey;
+  margin-bottom: 15px;
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #f4f4f4;
+  padding: 10px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-section {
+  width: 78%;
+  padding: 4px;
+}
+
+.event-section {
+  width: 22%;
+  padding: 8px 4px 4px 4px;
+  overflow-y: scroll;
+  border-left: 1px solid grey;
+}
+
+.grid-selector-sidebar {
+  margin-top: 20px;
+  display: flex;
+  gap: 5px;
+}
+
+.video-tile {
+  border: 1px solid #ccc;
+  background-color: #000;
+  margin: 0px;
+  display: inline-block;
+}
+
+.video-tile:hover{
+  border: 1px solid red;
+  /* transform: scale(1.1);
+  transition: transform 0. */
+}
+
+/* #ej2-datepicker_0{
+  width: 97%;
+} */
+
+.css-1vebizr{
+    padding: 32px;
+    background-color: white;
+    width: 670px !important;
+    height: 650px;
+    margin: 100px auto;
+    border-radius: 8px;
+    overflow: auto;
+}

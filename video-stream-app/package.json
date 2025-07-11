@@ -1,0 +1,76 @@
+{
+  "name": "video-stream-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.0",
+    "@mui/material": "^7.1.0",
+    "@syncfusion/ej2-base": "^27.1.55",
+    "@syncfusion/ej2-buttons": "^27.1.53",
+    "@syncfusion/ej2-inputs": "^27.1.55",
+    "@syncfusion/ej2-react-buttons": "^27.1.53",
+    "@syncfusion/ej2-react-calendars": "^27.1.57",
+    "@syncfusion/ej2-react-dropdowns": "^27.1.57",
+    "@syncfusion/ej2-react-grids": "^27.1.57",
+    "@syncfusion/ej2-react-inputs": "^27.1.55",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.21.6",
+    "browser-image-compression": "^2.0.2",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
+    "font-awesome": "^4.7.0",
+    "fs": "^0.0.1-security",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
+    "jszip": "^3.10.1",
+    "konva": "^8.3.13",
+    "path": "^0.12.7",
+    "react": "^18.3.1",
+    "react-date-range": "^2.0.1",
+    "react-datepicker": "^7.5.0",
+    "react-dom": "^18.3.1",
+    "react-grid-layout": "^1.5.0",
+    "react-konva": "^17.0.2-6",
+    "react-router-dom": "^6.27.0",
+    "recharts": "^2.15.3",
+    "tiff": "^6.2.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "react-scripts": "^5.0.1",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

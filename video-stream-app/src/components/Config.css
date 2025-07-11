@@ -1,0 +1,154 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.config-form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 166, 0, 0.2);
+  border: 2px solid #ffa500;
+}
+
+.config-form-container h2 {
+  text-align: center;
+  color: #ff7300;
+  margin-bottom: 20px;
+}
+
+.config-form-group {
+  margin-bottom: 20px;
+}
+
+.config-form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.config-form-group input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.config-form-group input[type="radio"],
+.config-form-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.custom-select {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fffaf3;
+}
+
+.selected-values {
+  min-height: 20px;
+  color: #444;
+}
+
+.dropdown-options {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 6px;
+  padding: 10px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+
+.dropdown-options label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: #ff7300;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.submit-button:hover {
+  background-color: #e56600;
+}
+
+.config_form{
+  width: 100%;
+}
+
+.config-form-container {
+  background: #fff7f0;
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+  font-family: Arial, sans-serif;
+}
+
+.config-form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.custom-select {
+  background: white;
+  padding: 10px;
+  border: 1px solid orange;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selected-values {
+  color: #333;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid orange;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.dropdown-options label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.submit-button {
+  background: orange;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}

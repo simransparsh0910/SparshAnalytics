@@ -1,0 +1,112 @@
+.login-form-container, .signup-form-container, .camera-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f7f7f7; 
+}
+
+#loginForm, .signupForm {
+    width: 30%;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.radio-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.login-btn, .addUser-btn, .addCam-btn{
+    background-color: black !important;
+}
+
+.login-btn:hover{
+    background-color: white !important;
+    color: black !important;
+}
+
+.toggle-password-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #6c757d; /* Default color */
+}
+
+.toggle-password-btn:hover {
+    color: #007bff; /* Hover color */
+}
+
+.input-password,.input-username{
+    width: 100% !important;
+    border: none !important;
+    border-bottom: 1px solid !important;
+    outline: none !important;
+    border-radius:0px !important;
+    padding:5px
+}
+
+.checkbox-container{
+    display:flex;
+}
+
+.link-container{
+    display:flex;
+    justify-content: space-between;
+}
+
+.checkbox-container label{
+    font-size: 10px;
+    line-height: 18px;
+}
+
+.forgot-password-link{
+    margin-top:0px !important
+}
+
+.forgot-link{
+    font-size:smaller;
+    color:black
+}
+
+.forgotPass-form, .resetPass-form{
+    margin-left:auto!important;
+    margin-right:auto!important;
+}
+
+.login-link{
+    font-size:smaller;
+    color:black
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
