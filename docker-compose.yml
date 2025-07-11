@@ -1,0 +1,129 @@
+version: '3.8'
+
+networks:
+  rtsp_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "true"
+      com.docker.network.bridge.enable_ip_masquerade: "true"
+      com.docker.network.driver.mtu: "1500"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+services:
+  analytics-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: analytics_backend
+    ports:
+      - "5010:5010"
+      - "5020:5020"
+    networks:
+      - rtsp_network
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    volumes:
+      - ./config.json:/app/config.json
+      - ./license.bin:/app/license.bin
+      - ./virtual_analytics/streams.json:/app/virtual_analytics/streams.json
+      - ./virtual_analytics/main.py:/app/virtual_analytics/main.py
+      - ./virtual_analytics/helpers.py:/app/virtual_analytics/helpers.py
+      - ./virtual_analytics/LOGS:/app/virtual_analytics/LOGS
+      - ./virtual_analytics/api.py:/app/virtual_analytics/api.py
+      - ./virtual_analytics/intrusion:/app/virtual_analytics/intrusion
+      - ./virtual_analytics/intrusion_attributes:/app/virtual_analytics/intrusion_attributes
+      - ./virtual_analytics/loitering:/app/virtual_analytics/loitering
+      - ./virtual_analytics/crowdformation_alerts:/app/virtual_analytics/crowdformation_alerts
+      - ./virtual_analytics/crowdestimation_alerts:/app/virtual_analytics/crowdestimation_alerts
+      - ./virtual_analytics/crowd_dispersion_alerts:/app/virtual_analytics/crowd_dispersion_alerts
+      - ./virtual_analytics/fire_smoke_alerts:/app/virtual_analytics/fire_smoke_alerts
+      - ./virtual_analytics/waving_alerts:/app/virtual_analytics/waving_alerts
+      - ./virtual_analytics/fall_alerts:/app/virtual_analytics/fall_alerts
+      - ./virtual_analytics/wrong_direction_alerts:/app/virtual_analytics/wrong_direction_alerts
+      - ./virtual_analytics/waiting_time_alerts:/app/virtual_analytics/waiting_time_alerts
+      - ./virtual_analytics/directional_arrow_alerts:/app/virtual_analytics/directional_arrow_alerts
+      - ./virtual_analytics/in_out_alerts:/app/virtual_analytics/in_out_alerts
+      - ./face_recognition/streams.json:/app/face_recognition/streams.json
+      - ./face_recognition/detected_faces:/app/face_recognition/detected_faces
+      - ./face_recognition/faces:/app/face_recognition/faces
+      - ./face_recognition/FullFrames:/app/face_recognition/FullFrames
+      - ./face_recognition/face_data.db:/app/face_recognition/face_data.db
+      - ./face_recognition/embeddings_faiss.index:/app/face_recognition/embeddings_faiss.index
+      - ./face_recognition/labels.json:/app/face_recognition/labels.json
+      - ./face_recognition/main.py:/app/face_recognition/main.py
+      - ./face_recognition/attributes.py:/app/face_recognition/attributes.py
+    restart: always
+    environment:
+      - OPENCV_FFMPEG_CAPTURE_OPTIONS=rtsp_transport;tcp
+
+  backend:
+    build: ./Video-Stream-App-Backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+      - "9000:9000"
+    expose:
+      - "8080"
+      - "9000"
+      - "5000"
+    networks:
+      - rtsp_network
+    volumes:
+      - ./Video-Stream-App-Backend:/app
+      - backend_node_modules:/app/node_modules
+      - ./video-stream-app:/video-stream-app
+      - /c/Users/spars/Desktop/Dockerized_Complete_Project/virtual_analytics:/app/virtual_analytics
+      - /c/Users/spars/Desktop/Dockerized_Complete_Project/face_recognition:/app/face_recognition
+      - ./media_server:/media_server
+      - ./license.bin:/app/license.bin
+    restart: always
+
+  frontend:
+    build: ./video-stream-app
+    container_name: frontend
+    expose:
+      - "3000"
+    networks:
+      - rtsp_network
+    volumes:
+      - ./video-stream-app:/app
+      - frontend_node_modules:/app/node_modules
+    stdin_open: true
+    restart: always
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
+      - ./conf/selfsigned.key:/etc/nginx/ssl/selfsigned.key
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - rtsp_network
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - rtsp_network
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+  frontend_node_modules:
+  backend_node_modules:
