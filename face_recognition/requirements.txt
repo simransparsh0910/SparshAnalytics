@@ -1,0 +1,11 @@
+numpy==1.24.4
+opencv-python 
+pycryptodome
+torch
+onnxruntime-gpu
+faiss-cpu
+scikit-image
+scikit-learn 
+zmq 
+torchvision
+pyarmor

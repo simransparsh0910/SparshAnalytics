@@ -1,0 +1,16 @@
+{
+    "zmq": {
+      "send_port": "tcp://192.168.1.16:5000",
+      "send_data_port": "tcp://192.168.123.6:5000",
+      "recv_port": "tcp://*:5020"
+    },
+    "data" : {
+      "port" : "192.168.1.16",
+      "path" : "/home/spva/Documents/SparshAnalytics/face_recognition",
+      "attributes" : "yes"
+    },
+    "api": {
+        "url": ""
+    }
+  }
+  
