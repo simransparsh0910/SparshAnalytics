@@ -1,0 +1,47 @@
+{
+    "streams": [
+        {
+            "id": "2",
+            "url": "rtsp://192.168.29.31:8554/test1",
+            "analytics": [
+                {
+                    "type": "person_in_out_count",
+                    "entry_line": [
+                        [
+                            292,
+                            58
+                        ],
+                        [
+                            277,
+                            552
+                        ]
+                    ],
+                    "exit_line": [
+                        [
+                            436,
+                            47
+                        ],
+                        [
+                            419,
+                            549
+                        ]
+                    ]
+                }
+            ],
+            "name": "rgee",
+            "fps": 2,
+            "username": "",
+            "password": "",
+            "loitering_threshold": 0,
+            "crowd_formation_threshold": 0,
+            "crowd_formation_duration": 0,
+            "crowd_estimation_threshold": 0,
+            "crowd_estimation_duration": 0,
+            "entry_line_type": "vertical",
+            "exit_line_type": "vertical",
+            "direction": "Left to Right",
+            "crowd_dispersion_threshold": 0,
+            "crowd_dispersion_duration": 0
+        }
+    ]
+}
