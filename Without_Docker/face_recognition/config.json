@@ -1,0 +1,29 @@
+{
+  "zmq": {
+      "publisher": {
+          "address": "tcp://backend:5000",
+          "main_address" : "tcp://192.168.29.232:5000"
+      },
+      "subscriber": {
+          "address_VA": "tcp://analytics_backend:5010",
+          "address_FRS": "tcp://*:5020"
+      }
+  },
+  "data": {
+      "intrusion_classes": [0,1,2,3,4,5,6,7], 
+      "path_VA" : "app/virtual_analytics",
+      "path_FRS": "app/face_recognition",
+      "port" : "192.168.29.31",
+      "attributes" : "yes"
+  },
+    "api": {
+        "url": "",
+        "auth_url" : "",
+        "username" : "",
+        "password" : "",
+        "api_key" : ""
+    },
+    "vms" : {
+        "ip" : ""
+    }
+}
