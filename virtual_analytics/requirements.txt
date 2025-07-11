@@ -1,0 +1,13 @@
+opencv-python-headless
+zmq 
+torch
+ultralytics
+torchvision
+pillow
+filterpy
+scikit-image 
+numpy==1.24.4
+lap
+h5py
+matplotlib==3.7.5
+cryptography

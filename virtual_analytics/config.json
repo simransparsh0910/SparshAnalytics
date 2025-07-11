@@ -1,0 +1,35 @@
+
+{
+  "zmq": {
+      "publisher": {
+          "address": "tcp://192.168.1.16:5000"
+      },
+      "subscriber": {
+          "address": "tcp://*:5010"
+      }
+  },
+  "detection": {
+      
+      "intrusion_classes": [0, 1,2,3,4,5,6,7],  
+      "max_cameras": 10,
+      "path" : "home/spva/Documents/SparshAnalytics/virtual_analytics",
+      "port" : "192.168.1.16"  
+  },
+  "events": {
+      "object_abandoned": {
+          "event_type": "Object_Abandon_detected",
+          "detection": "True"
+      },
+      "loitering": {
+          "event_type": "loitering_detected",
+          "detection": "True"
+      },
+      "crowd_alert": {
+          "event_type": "Crowd_detected",
+          "detection": "True"
+      },"intrusion":{
+          "event_type": "intrusion_detected",
+          "detection": "True"
+      }
+  }
+}
